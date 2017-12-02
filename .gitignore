@@ -1,3 +1,6 @@
+# Vim
+*.un~
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
