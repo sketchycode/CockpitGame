@@ -7,12 +7,12 @@ public class Switch : MonoBehaviour
 
     public string Name { get; set; } 
 
-    private void OnValueChanged(bool value)
+    public void OnValueChanged(bool value)
     {
         if (ValueChanged != null)
         {
             var args = new SwitchValueChangedEventArgs();
-            args.newValue = value;
+            args.NewValue = value;
             ValueChanged(this, args);
         }
     }
@@ -20,5 +20,5 @@ public class Switch : MonoBehaviour
 
 public class SwitchValueChangedEventArgs : EventArgs
 {
-    public bool newValue { get; set; }
+    public bool NewValue { get; set; }
 }
