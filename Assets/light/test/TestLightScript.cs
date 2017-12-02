@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestListScript : MonoBehaviour {
+public class TestLightScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
