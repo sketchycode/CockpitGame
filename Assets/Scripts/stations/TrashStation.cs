@@ -45,6 +45,7 @@ public class TrashStation : StationBase
     {
         DumpButton.Interacted += DumpButton_Interacted;
         RollerSwitch.Interacted += RollerSwitch_Interacted;
+        RollerSwitch.IsOn = false;
     }
 
     void Update()
@@ -63,6 +64,8 @@ public class TrashStation : StationBase
             if (FailureEvent.ApplyInputActionToFailureReset(e.InputAction))
             {
                 HandleFailureResolved(FailureEvent);
+                TrashLevel = 0;
+                RollerSwitch.IsOn = false;
             }
         }
         else
