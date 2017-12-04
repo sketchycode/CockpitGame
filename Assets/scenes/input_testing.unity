@@ -490,7 +490,7 @@ MonoBehaviour:
   ReigniteButton: {fileID: 1906376390}
   ACFrozenIndicator: {fileID: 739602696}
   PilotLightOutIndicator: {fileID: 713602818}
-  TimeToNewRandomTempForceInSeconds: 10
+  TimeToNewRandomTempForceInSeconds: 30
 --- !u!114 &445284545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,7 +1503,7 @@ Prefab:
     - target: {fileID: 224829235349314182, guid: c6efa4b69d5e086489f7dcdccee16ffe,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 98
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6efa4b69d5e086489f7dcdccee16ffe, type: 2}
@@ -2049,7 +2049,7 @@ Prefab:
     - target: {fileID: 224312745257789140, guid: 2fad5465e55abd949814a0403e5edeea,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1427398755057824, guid: 2fad5465e55abd949814a0403e5edeea, type: 2}
       propertyPath: m_Name
