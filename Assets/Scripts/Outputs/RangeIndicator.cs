@@ -8,8 +8,6 @@ public class RangeIndicator : MonoBehaviour
 
     [Range(0, 1f)]
     public float TrueValue; // value the gauge should read
-
-    private float currentValue; // value the gauge currently reads (allows for animation to true value)
     private GameObject background;
     private Slider slider;
 
@@ -17,7 +15,6 @@ public class RangeIndicator : MonoBehaviour
     {
         background = transform.Find("Background").gameObject;
         slider = GetComponent<Slider>();
-        currentValue = TrueValue;
     }
     
     public void Update()
@@ -25,8 +22,7 @@ public class RangeIndicator : MonoBehaviour
         if (Segments.Length > 0)
         {
             AdjustBackgroundSegmentsIfNeeded();
-            currentValue = Mathf.Lerp(currentValue, TrueValue, Time.deltaTime * 5);
-            slider.value = currentValue;
+            slider.value = TrueValue;
         }
     }
 

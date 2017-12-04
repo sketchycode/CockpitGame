@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0172943af9aed384ab821a9307a12a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Slider: {fileID: 114069274061531858}
 --- !u!222 &222499651755929556
 CanvasRenderer:
   m_ObjectHideFlags: 1
