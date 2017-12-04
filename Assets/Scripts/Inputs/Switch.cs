@@ -1,24 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class Switch : MonoBehaviour
+public class Switch : UIInputBase
 {
-    public event EventHandler<SwitchValueChangedEventArgs> ValueChanged;
-
-    public string Name { get; set; } 
-
     public void OnValueChanged(bool value)
     {
-        if (ValueChanged != null)
-        {
-            var args = new SwitchValueChangedEventArgs();
-            args.NewValue = value;
-            ValueChanged(this, args);
-        }
+        Value = value ? 1f : 0f;
+        OnInteracted();
     }
-}
-
-public class SwitchValueChangedEventArgs : EventArgs
-{
-    public bool NewValue { get; set; }
 }

@@ -22,11 +22,28 @@ public class RangeIndicator : MonoBehaviour
     
     public void Update()
     {
-        if (Segments != null && Segments.Length > 0)
+        if (Segments.Length > 0)
         {
             AdjustBackgroundSegmentsIfNeeded();
-            currentValue = Mathf.Lerp(currentValue, TrueValue, Time.deltaTime);
+            currentValue = Mathf.Lerp(currentValue, TrueValue, Time.deltaTime * 5);
             slider.value = currentValue;
+        }
+    }
+
+    public RangeSegmentStatus CurrentStatus
+    {
+        get
+        {
+            var segmentWidthTotal = Segments.Sum(s => s.Length);
+            float currentWidth = 0;
+
+            for(int i=0; i<Segments.Length; i++)
+            {
+                currentWidth += Segments[i].Length / segmentWidthTotal;
+                if(currentWidth >= TrueValue) { return Segments[i].Status; }
+            }
+
+            return Segments[Segments.Length - 1].Status;
         }
     }
 

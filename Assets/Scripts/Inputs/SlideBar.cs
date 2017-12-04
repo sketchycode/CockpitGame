@@ -1,24 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-public class SlideBar : MonoBehaviour
+public class SlideBar : UIInputBase
 {
-    public string Name { get; set; }
-
-    public event EventHandler<SlideBarValueChangedEventArgs> ValueChanged;
-
     public void OnValueChanged(float value)
     {
-        if(ValueChanged != null)
-        {
-            var args = new SlideBarValueChangedEventArgs();
-            args.NewValue = value;
-            ValueChanged(this, args);
-        }
+        Value = value;
+        OnInteracted();
     }
-}
-
-public class SlideBarValueChangedEventArgs : EventArgs
-{
-    public float NewValue { get; set; }
 }

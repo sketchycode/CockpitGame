@@ -1,16 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public class ShipButton : MonoBehaviour
+public class ShipButton : UIInputBase
 {
-    public event EventHandler Clicked;
-    public string Name { get; set; }
-
     public void OnClick()
     {
-        if(Clicked != null)
-        {
-            Clicked(this, EventArgs.Empty);
-        }
+        OnInteracted();
     }
 }
