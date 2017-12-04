@@ -7,14 +7,17 @@ public class RangeIndicator : MonoBehaviour
     public RangeSegment[] Segments;
 
     [Range(0, 1f)]
-    public float TrueValue; // value the gauge should read
+    public float TrueValue; // gauge will animate to this value
+
     private GameObject background;
     private Slider slider;
+    private float currentValue;
 
     public void Start()
     {
         background = transform.Find("Background").gameObject;
         slider = GetComponent<Slider>();
+        currentValue = TrueValue;
     }
     
     public void Update()
@@ -22,8 +25,18 @@ public class RangeIndicator : MonoBehaviour
         if (Segments.Length > 0)
         {
             AdjustBackgroundSegmentsIfNeeded();
-            slider.value = TrueValue;
+            currentValue = Mathf.Lerp(currentValue, TrueValue, Time.deltaTime * 5);
+            slider.value = currentValue;
         }
+    }
+
+    /// <summary>
+    /// Use this to set the displayed value immediately to the given value.
+    /// </summary>
+    public void SetImmediateValue(float value)
+    {
+        TrueValue = value;
+        currentValue = value;
     }
 
     public RangeSegmentStatus CurrentStatus
