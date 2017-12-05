@@ -13,8 +13,32 @@ public class LED : MonoBehaviour
     public Image bulb;
     public Image bulbGlow;
 
+    private bool isBlinking = false;
+    private float timeSinceCycle = 0;
+    private float onTime = 0;
+    private float offTime = 0;
+
+    public void StartBlinking(float onTime, float offTime)
+    {
+        this.onTime = onTime;
+        this.offTime = offTime;
+        isBlinking = true;
+    }
+
+    public void StopBlinking()
+    {
+        isBlinking = false;
+    }
+
     void Update()
     {
+        if(isBlinking)
+        {
+            timeSinceCycle += Time.deltaTime;
+            isOn = timeSinceCycle < onTime || timeSinceCycle > (onTime + offTime);
+            if (timeSinceCycle > (onTime + offTime)) { timeSinceCycle -= onTime + offTime; }
+        }
+
         if(isOn)
         {
             bulb.color = onColor;
