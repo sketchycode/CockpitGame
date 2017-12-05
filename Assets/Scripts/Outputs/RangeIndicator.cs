@@ -110,4 +110,13 @@ public class RangeSegment
 {
     public float Length;
     public RangeSegmentStatus Status;
+
+    public RangeSegment Clone()
+    {
+        return new RangeSegment()
+        {
+            Length = this.Length,
+            Status = this.Status
+        };
+    }
 }
