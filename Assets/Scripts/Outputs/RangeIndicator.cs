@@ -8,16 +8,19 @@ public class RangeIndicator : MonoBehaviour
 
     [Range(0, 1f)]
     public float TrueValue; // gauge will animate to this value
+    public float CurrentValue;
 
     private GameObject background;
     private Slider slider;
-    private float currentValue;
+    private float halfHandleWidth = 5f;
+    private float backgroundWidth = 0;
 
     public void Start()
     {
         background = transform.Find("Background").gameObject;
         slider = GetComponent<Slider>();
-        currentValue = TrueValue;
+        CurrentValue = TrueValue;
+        backgroundWidth = background.GetComponent<RectTransform>().rect.width;
     }
     
     public void Update()
@@ -25,8 +28,8 @@ public class RangeIndicator : MonoBehaviour
         if (Segments.Length > 0)
         {
             AdjustBackgroundSegmentsIfNeeded();
-            currentValue = Mathf.Lerp(currentValue, TrueValue, Time.deltaTime * 5);
-            slider.value = currentValue;
+            CurrentValue = Mathf.Lerp(CurrentValue, TrueValue, Time.deltaTime * 5);
+            slider.value = CurrentValue;
         }
     }
 
@@ -36,7 +39,7 @@ public class RangeIndicator : MonoBehaviour
     public void SetImmediateValue(float value)
     {
         TrueValue = value;
-        currentValue = value;
+        CurrentValue = value;
     }
 
     public RangeSegmentStatus CurrentStatus
@@ -45,11 +48,12 @@ public class RangeIndicator : MonoBehaviour
         {
             var segmentWidthTotal = Segments.Sum(s => s.Length);
             float currentWidth = 0;
+            var normalizedValue = Mathf.Lerp(halfHandleWidth / backgroundWidth, (backgroundWidth - halfHandleWidth) / backgroundWidth, CurrentValue);
 
             for(int i=0; i<Segments.Length; i++)
             {
                 currentWidth += Segments[i].Length / segmentWidthTotal;
-                if(currentWidth >= TrueValue) { return Segments[i].Status; }
+                if(currentWidth >= normalizedValue) { return Segments[i].Status; }
             }
 
             return Segments[Segments.Length - 1].Status;
@@ -110,4 +114,13 @@ public class RangeSegment
 {
     public float Length;
     public RangeSegmentStatus Status;
+
+    public RangeSegment Clone()
+    {
+        return new RangeSegment()
+        {
+            Length = this.Length,
+            Status = this.Status
+        };
+    }
 }

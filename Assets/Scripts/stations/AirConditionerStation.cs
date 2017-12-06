@@ -29,6 +29,8 @@ public class AirConditionerStation : StationBase
     private float tempSetting = .4f;
     private float timeSinceLastRandomTempForce = 0;
 
+    private bool InFailure { get { return ACFrozenFailure.InFailure || PilotLightOutFailure.InFailure; } }
+
     void Start()
     {
         TemperateSetting.Interacted += TemperateSetting_Interacted;
@@ -40,11 +42,14 @@ public class AirConditionerStation : StationBase
 
     void Update()
     {
-        PilotLightOutIndicator.isOn = Heater.IsOn && PilotLightOutFailure.CheckForFailure(Time.deltaTime);
-        if(!PilotLightOutIndicator.isOn)
+        if (!InFailure)
         {
-            ACFrozenIndicator.isOn = !Heater.IsOn && ACFrozenFailure.CheckForFailure(Time.deltaTime);
+            if (Heater.IsOn) { PilotLightOutFailure.CheckForFailure(Time.deltaTime); }
+            else { ACFrozenFailure.CheckForFailure(Time.deltaTime); }
         }
+
+        PilotLightOutIndicator.isOn = PilotLightOutFailure.InFailure;
+        ACFrozenIndicator.isOn = ACFrozenFailure.InFailure;
 
         CheckForNewRandomTempForce(Time.deltaTime);
         var hvacForce = GetHvacForce(tempSetting, Heater.IsOn, ACFrozenFailure.InFailure, PilotLightOutFailure.InFailure);

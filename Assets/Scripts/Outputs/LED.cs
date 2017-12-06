@@ -15,59 +15,55 @@ public class LED : MonoBehaviour
     public Image bulb;
     public Image bulbGlow;
 
-	private IEnumerator blinkCoroutine;
-
-	public void Blink(float blinkFrequencySeconds)
-	{		
-		StopBlink ();
-		blinkCoroutine = BlinkIndefinitely (blinkFrequencySeconds);
-		StartCoroutine (blinkCoroutine);
-	}
-
-	private void StopBlink()
-	{
-		if (blinkCoroutine != null)
-		{
-			StopCoroutine (blinkCoroutine);
-		}
-	}
-
-	private IEnumerator BlinkIndefinitely(float blinkFrequencySeconds)
-	{
-		while (true)
-		{			
-			_Toggle ();
-			yield return new WaitForSeconds (blinkFrequencySeconds / 2f);
-		}
-	}
+	private bool isBlinking = false;
+	private float timeSinceCycle = 0;
+	private float onTime = 0;
+	private float offTime = 0;
 
 	public void Toggle()
 	{
-		StopBlink ();
-		_Toggle ();
-	}
-	private void _Toggle()
-	{
+		isBlinking = false;
 		isOn = !isOn;
-		UpdateColorImageState (isOn);
 	}
 
 	public void TurnOn()
 	{
-		StopBlink ();
+		isBlinking = false;
 		isOn = true;
-		UpdateColorImageState (isOn);
 	}
 
 	public void TurnOff()
-	{
-		StopBlink ();
-		isOn = false;
-		UpdateColorImageState (isOn);
+	{		
+		isBlinking = false;
+		isOn = false;	
 	}
+
+    public void StartBlinking(float onTime, float offTime)
+    {
+        this.onTime = onTime;
+        this.offTime = offTime;
+        isBlinking = true;
+    }
+
+	public void StartBlinking(float blinkFrequencySeconds)
+	{		
+		StartBlinking (blinkFrequencySeconds / 2f, blinkFrequencySeconds / 2f);
+	}
+
+    public void StopBlinking()
+    {
+        isBlinking = false;
+    }
 
     void Update()
     {
+        if(isBlinking)
+        {
+            timeSinceCycle += Time.deltaTime;
+            isOn = timeSinceCycle < onTime || timeSinceCycle > (onTime + offTime);
+            if (timeSinceCycle > (onTime + offTime)) { timeSinceCycle -= onTime + offTime; }
+        }
+
 		UpdateColorImageState (isOn);
     }
 

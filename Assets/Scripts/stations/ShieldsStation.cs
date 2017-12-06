@@ -101,7 +101,7 @@ public class ShieldsStation : StationBase {
 		GlyphScreen.DisplayGlyphs (readout);
 
 		GreenLED.TurnOff ();
-		RedLED.Blink (0.5f);
+		RedLED.StartBlinking (0.5f);
 	}
 
 }
