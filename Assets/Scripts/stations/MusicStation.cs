@@ -40,7 +40,7 @@ public class MusicStation : StationBase
         if(!songEnded && songDurationRemaining <= 0)
         {
             songEnded = true;
-            HandleScoringEvent(ScoringEvent.SongEnded);
+            HandleGlobalEvent(GlobalEvent.SongEnded);
         }
         SongTimeRemainingIndicator.TrueValue = Mathf.Clamp01(songDurationRemaining / songDuration);
     }
@@ -75,7 +75,7 @@ public class MusicStation : StationBase
 
         if (nextSongPrepared)
         {
-            HandleScoringEvent(beatMatched ? ScoringEvent.BeatMatched : ScoringEvent.BeatDropped);
+            HandleGlobalEvent(beatMatched ? GlobalEvent.BeatMatched : GlobalEvent.BeatDropped);
 
             songDuration = MinSongTimeInSeconds + (MaxSongTimeInSeconds - MinSongTimeInSeconds) * Random.value;
             songDurationRemaining = songDuration;

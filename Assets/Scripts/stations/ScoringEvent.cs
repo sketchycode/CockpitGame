@@ -1,10 +1,11 @@
 ﻿
 partial class StationBase
 {
-    public enum ScoringEvent
+    public enum GlobalEvent
     {
         BeatDropped,
         BeatMatched,
-        SongEnded
+        SongEnded,
+        QuantumChargeUsed
     }
 }

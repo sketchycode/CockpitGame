@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract partial class StationBase : MonoBehaviour
 {
     public event EventHandler<FailureResolvedEventArgs> FailureResolved;
-    public event EventHandler<ScoringEventArgs> ScoringEventOccurred;
+    public event EventHandler<GlobalEventArgs> ScoringEventOccurred;
 
     protected void HandleFailureResolved(FailureEvent failureEvent)
     {
@@ -15,12 +15,12 @@ public abstract partial class StationBase : MonoBehaviour
         }
     }
 
-    protected void HandleScoringEvent(ScoringEvent scoringEvent)
+    protected void HandleGlobalEvent(GlobalEvent globalEvent, RangeSegmentStatus eventQuality = RangeSegmentStatus.Nominal)
     {
-        Debug.Log("scoring event occurred: " + scoringEvent.ToString());
+        Debug.Log("global event occurred: " + globalEvent.ToString());
         if(ScoringEventOccurred != null)
         {
-            var args = new ScoringEventArgs() { Event = scoringEvent };
+            var args = new GlobalEventArgs() { Event = globalEvent };
             ScoringEventOccurred(this, args);
         }
     }
@@ -39,7 +39,8 @@ public class FailureResolvedEventArgs : EventArgs
     public FailureEvent FailureEvent;
 }
 
-public class ScoringEventArgs : EventArgs
+public class GlobalEventArgs : EventArgs
 {
-    public StationBase.ScoringEvent Event;
+    public StationBase.GlobalEvent Event;
+    public RangeSegmentStatus Quality;
 }
