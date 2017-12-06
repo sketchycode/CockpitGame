@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: bf798e8a328f4184ab59bea439e0eae4
-timeCreated: 1512416908
+timeCreated: 1512433287
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -20,7 +20,7 @@ TextureImporter:
     21300026: audioknobs-all_13
     21300028: audioknobs-all_14
     21300030: audioknobs-all_15
-    21300032: audioknobs-all_16
+    21300032: screen
     21300034: audioknobs-all_17
     21300036: audioknobs-all_18
     21300038: audioknobs-all_19
@@ -561,16 +561,16 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: audioknobs-all_16
+      name: screen
       rect:
         serializedVersion: 2
-        x: 419
-        y: 420
-        width: 85
-        height: 40
+        x: 420
+        y: 424
+        width: 82
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 9, y: 5, z: 7, w: 5}
       outline: []
       physicsShape: []
       tessellationDetail: 0

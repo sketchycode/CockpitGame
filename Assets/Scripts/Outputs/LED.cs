@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
@@ -13,10 +15,28 @@ public class LED : MonoBehaviour
     public Image bulb;
     public Image bulbGlow;
 
-    private bool isBlinking = false;
-    private float timeSinceCycle = 0;
-    private float onTime = 0;
-    private float offTime = 0;
+	private bool isBlinking = false;
+	private float timeSinceCycle = 0;
+	private float onTime = 0;
+	private float offTime = 0;
+
+	public void Toggle()
+	{
+		isBlinking = false;
+		isOn = !isOn;
+	}
+
+	public void TurnOn()
+	{
+		isBlinking = false;
+		isOn = true;
+	}
+
+	public void TurnOff()
+	{		
+		isBlinking = false;
+		isOn = false;	
+	}
 
     public void StartBlinking(float onTime, float offTime)
     {
@@ -24,6 +44,11 @@ public class LED : MonoBehaviour
         this.offTime = offTime;
         isBlinking = true;
     }
+
+	public void StartBlinking(float blinkFrequencySeconds)
+	{		
+		StartBlinking (blinkFrequencySeconds / 2f, blinkFrequencySeconds / 2f);
+	}
 
     public void StopBlinking()
     {
@@ -39,16 +64,22 @@ public class LED : MonoBehaviour
             if (timeSinceCycle > (onTime + offTime)) { timeSinceCycle -= onTime + offTime; }
         }
 
-        if(isOn)
-        {
-            bulb.color = onColor;
-            bulbGlow.color = glowColor;
-            bulbGlow.enabled = true;
-        }
-        else
-        {
-            bulb.color = offColor;
-            bulbGlow.enabled = false;
-        }
+		UpdateColorImageState (isOn);
     }
+
+	private void UpdateColorImageState(bool enabled)
+	{
+		if (enabled)
+		{
+			bulb.color = onColor;
+			bulbGlow.color = glowColor;
+			bulbGlow.enabled = true;
+		}
+		else
+		{
+			bulb.color = offColor;
+			bulbGlow.enabled = false;
+		}
+	}
+
 }
