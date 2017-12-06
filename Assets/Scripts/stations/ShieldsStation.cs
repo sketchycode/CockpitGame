@@ -6,11 +6,12 @@ using UnityEngine.UI;
 public class ShieldsStation : StationBase {
 	public ShipButton[] Buttons;
 	public Sprite[] ButtonGlyphs;
+	public Sprite[] DisplayGlyphs;
 	public LED GreenLED;
 	public LED RedLED;
 	public GlyphScreenController GlyphScreen;
 
-	private int[] FaultCondition;
+	private Stack<int> FaultCondition = new Stack<int> ();
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +29,17 @@ public class ShieldsStation : StationBase {
 
 	public override float GetStationRating()
 	{
-		return 1f;
+		float rating;
+		if (FaultCondition.Count > 0)
+		{
+			rating = 0f;
+		}
+		else 
+		{
+			rating = 1f;
+		}
+
+		return rating;
 	}
 
 	public override void ResetToGoodState()
@@ -38,7 +49,7 @@ public class ShieldsStation : StationBase {
 
 	public override void TriggerFailureCondition()
 	{
-		if (FaultCondition == null)
+		if (FaultCondition.Count < 1)
 		{
 			SetupFaultCondition ();
 		}
@@ -46,27 +57,51 @@ public class ShieldsStation : StationBase {
 
 	private void Button_Interacted(object sender, InputActionEventArgs e)
 	{
-		for (int i = 0; i < Buttons.Length; i++) 
+		if (FaultCondition.Count > 0)
 		{
-			if (sender == Buttons[i])
-			{
-				Debug.Log ("Button " + i + " pressed");
-				break;
+			for (int i = 0; i < Buttons.Length; i++) 
+			{				
+				if (sender == Buttons[i])
+				{
+					if (FaultCondition.Peek() == i)
+					{
+						FaultCondition.Pop ();
+						GlyphScreen.ClearGlyph (ScreenClearSide.LEFT);
+
+						if (FaultCondition.Count < 1)
+						{
+							FaultCleared ();
+						}
+					}
+					break;
+				}
 			}
 		}
 	}
 
+	private void FaultCleared()
+	{
+		GreenLED.TurnOn ();
+		RedLED.TurnOff ();
+	}
+
 	private void SetupFaultCondition()
 	{
-		FaultCondition = new int[Random.Range (1, Buttons.Length)];
-		Sprite[] readout = new Sprite[FaultCondition.Length];
+		FaultCondition.Clear ();
+		int numPresses = Random.Range (1, Buttons.Length + 1);
+		Sprite[] readout = new Sprite[numPresses];
 
-		for (int i = 0; i < FaultCondition.Length; i++)
+		for (int i = numPresses - 1; i >= 0; i--)
 		{
-			FaultCondition [i] = Random.Range (0, Buttons.Length);
-			readout[i] = ButtonGlyphs [FaultCondition [i]];
+			int fault = Random.Range (0, Buttons.Length);
+			FaultCondition.Push (fault);
+			readout[i] = DisplayGlyphs [fault];
 		}
 
 		GlyphScreen.DisplayGlyphs (readout);
+
+		GreenLED.TurnOff ();
+		RedLED.Blink (0.5f);
 	}
+
 }
