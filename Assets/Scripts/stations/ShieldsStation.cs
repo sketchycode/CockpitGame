@@ -11,7 +11,12 @@ public class ShieldsStation : StationBase {
 	public LED RedLED;
 	public GlyphScreenController GlyphScreen;
 
+	public bool IsFault { get { return FaultCondition.Count > 0; } }
+
 	private Stack<int> FaultCondition = new Stack<int> ();
+
+	public float FaultsPerMinute;
+	private float faultTriggerCounter;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +29,19 @@ public class ShieldsStation : StationBase {
 		{
 			Image img = transform.Find ("Button" + i + "_Image").gameObject.GetComponent<Image> ();
 			img.sprite = ButtonGlyphs [i];
+		}
+	}
+
+	void Update() {
+		if (!IsFault)
+		{
+			float target = 60f / FaultsPerMinute;
+			faultTriggerCounter += Time.deltaTime + (Random.value * Time.deltaTime);
+			if (faultTriggerCounter >= target)
+			{
+				TriggerFailureCondition ();
+				faultTriggerCounter = 0f;
+			}
 		}
 	}
 
@@ -83,6 +101,7 @@ public class ShieldsStation : StationBase {
 	{
 		GreenLED.TurnOn ();
 		RedLED.TurnOff ();
+		HandleGlobalEvent (GlobalEvent.ShieldsRemodulated);
 	}
 
 	private void SetupFaultCondition()
