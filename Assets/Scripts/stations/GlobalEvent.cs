@@ -6,6 +6,7 @@ partial class StationBase
         BeatDropped,
         BeatMatched,
         SongEnded,
-        QuantumChargeUsed
+        QuantumChargeUsed,
+		ShieldsRemodulated
     }
 }

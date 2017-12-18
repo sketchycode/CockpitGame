@@ -1252,6 +1252,7 @@ MonoBehaviour:
   GreenLED: {fileID: 114049504730392778}
   RedLED: {fileID: 114892165807398228}
   GlyphScreen: {fileID: 114677941672450702}
+  FaultsPerMinute: 5
 --- !u!114 &114770540277376892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1823,7 +1824,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1963778572219188}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -346, y: -3, z: 0}
+  m_LocalPosition: {x: -128, y: -256, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224433782970189472}
@@ -1842,7 +1843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -346, y: -3}
+  m_AnchoredPosition: {x: -128, y: -256}
   m_SizeDelta: {x: 256, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224482761582722714
